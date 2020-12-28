@@ -6,7 +6,7 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.itpm_gk.android_it_terminology_search_app.R
-import com.itpm_gk.android_it_terminology_search_app.data.database.pojo.ITTerminology
+import com.itpm_gk.android_it_terminology_search_app.data.database.entity.ITTerminology
 import com.itpm_gk.android_it_terminology_search_app.databinding.FragmentItTerminologyDetailBinding
 
 class ITTerminologyDetailFragment(): Fragment(R.layout.fragment_it_terminology_detail) {

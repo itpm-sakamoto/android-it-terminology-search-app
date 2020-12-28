@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.itpm_gk.android_it_terminology_search_app.R
-import com.itpm_gk.android_it_terminology_search_app.data.database.pojo.ITTerminology
+import com.itpm_gk.android_it_terminology_search_app.data.database.entity.ITTerminology
 import com.itpm_gk.android_it_terminology_search_app.databinding.ListItemItTerminologyBinding
 
 class ITTerminologyListAdapter(

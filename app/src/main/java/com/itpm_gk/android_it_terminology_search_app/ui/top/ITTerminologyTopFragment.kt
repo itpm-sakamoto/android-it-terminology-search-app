@@ -3,11 +3,15 @@ package com.itpm_gk.android_it_terminology_search_app.ui.top
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.itpm_gk.android_it_terminology_search_app.R
 import com.itpm_gk.android_it_terminology_search_app.adapter.ITTerminologyListAdapter
-import com.itpm_gk.android_it_terminology_search_app.data.database.pojo.ITTerminology
+import com.itpm_gk.android_it_terminology_search_app.data.database.entity.ITTerminology
 import kotlinx.android.synthetic.main.fragment_it_terminology_top.*
 
 class ITTerminologyTopFragment(private val listener: OnITTerminologyTopActionListener):
@@ -18,27 +22,62 @@ class ITTerminologyTopFragment(private val listener: OnITTerminologyTopActionLis
         fun newInstance(listener: OnITTerminologyTopActionListener) = ITTerminologyTopFragment(listener)
     }
 
+    private lateinit var viewModel: ITTerminologyTopViewModel
+    private lateinit var adapter: ITTerminologyListAdapter
+
     interface OnITTerminologyTopActionListener {
         fun moveToDetail(itTerminology: ITTerminology)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // サンプルデータ
-        val datas: List<ITTerminology> = mutableListOf(
-            ITTerminology(1, "api", "API", "あるコンピュータプログラム（ソフトウェア）の機能や管理するデータなどを、外部の他のプログラムから呼び出して利用するための手順やデータ形式などを定めた規約のこと。"),
-            ITTerminology(2, "interface", "インターフェース", "二つのものが接続・接触する箇所や、両者の間で情報や信号などをやりとりするための手順や規約を定めたものを意味する。"),
-            ITTerminology(3, "ethernet", "イーサネット", "主に室内や建物内でコンピュータや電子機器をケーブルで繋いで通信する有線LAN（構内ネットワーク）の標準の一つで、最も普及している規格。"),
-            ITTerminology(4, "instance", "インスタンス", "ソフトウェアの分野では、あらかじめ定義されたコンピュータプログラムやデータ構造などを、メインメモリ上に展開して処理・実行できる状態にしたものを指す。"),
-            ITTerminology(5, "module", "モジュール", "機器やシステムの一部を構成するひとまとまりの機能を持った部品で、システム中核部や他の部品への接合部（インターフェース）の仕様が明確に定義され、容易に追加や交換ができるようなもののことを指す。")
-        )
+
+        // ViewModelの作成
+        viewModel = createViewModel()
+
+        // Adapterの作成
+        adapter = createAdapter()
+
+        // RecyclerViewの初期設定
+        initRecyclerView(adapter)
+
+        viewModel.itTerminologyList.observe(viewLifecycleOwner, Observer {
+            adapter.notifyDataSetChanged()
+        })
+        viewLifecycleOwner.lifecycle.addObserver(viewModel)
+    }
+
+    /**
+     * ViewModelの作成
+     */
+    private fun createViewModel() =
+        ViewModelProvider(
+            this,
+            ITTerminologyTopViewModelFactory(lifecycleScope, requireContext())
+        ).get(ITTerminologyTopViewModel::class.java)
+
+    /**
+     * Adapterの作成
+     */
+    private fun createAdapter(): ITTerminologyListAdapter {
+        val itTerminologySnapshot = viewModel.itTerminologyList.value
+            ?: ArrayList<ITTerminology>().also {
+                viewModel.itTerminologyList.value = it
+            }
         // Adapterの生成
         val adapter = ITTerminologyListAdapter(
             layoutInflater,
-            datas
+            itTerminologySnapshot
         )
         // タップイベントの設定
         adapter.setOnClickListener(this)
+        return adapter
+    }
+
+    /**
+     * RecyclerViewの初期設定
+     */
+    private fun initRecyclerView(adapter: ITTerminologyListAdapter) {
         val layoutManager = LinearLayoutManager(
             requireContext(),
             LinearLayoutManager.VERTICAL,

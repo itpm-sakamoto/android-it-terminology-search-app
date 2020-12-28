@@ -5,7 +5,7 @@
     <data>
         <variable
             name="itTerminology"
-            type="com.itpm_gk.android_it_terminology_search_app.data.database.pojo.ITTerminology" />
+            type="com.itpm_gk.android_it_terminology_search_app.data.database.entity.ITTerminology" />
     </data>
 
     <LinearLayout
@@ -65,6 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:text="@{itTerminology.description}"
             android:textColor="@android:color/black"
             android:textSize="16sp"/>
