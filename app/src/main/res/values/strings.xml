@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">IT用語一覧</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <string name="data_not_found">データがありません。</string>
+    <string name="settings">設定</string>
+    <string name="about_app">このアプリについて</string>
     <string name="word">用語</string>
     <string name="description">説明</string>
+    <string name="qualification_list">資格一覧</string>
 </resources>
