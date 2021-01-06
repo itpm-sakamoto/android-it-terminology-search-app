@@ -26,5 +26,6 @@ class SplashActivity: AppCompatActivity(), SplashFragment.SplashActionListener {
      */
     override fun moveToTop() {
         startActivity(TopActivity.createIntent(this))
+        finish()
     }
 }

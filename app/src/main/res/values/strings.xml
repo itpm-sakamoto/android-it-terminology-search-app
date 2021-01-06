@@ -9,4 +9,14 @@
     <string name="word">用語</string>
     <string name="description">説明</string>
     <string name="qualification_list">資格一覧</string>
+
+    <!-- 設定画面 -->
+    <string name="edit">編集</string>
+    <string name="moji_size">文字サイズ</string>
+    <string name="small_str">小</string>
+    <string name="default_str">デフォルト</string>
+    <string name="big_str">大</string>
+    <string name="general">全般</string>
+    <string name="theme">テーマ</string>
+
 </resources>

@@ -5,5 +5,6 @@ data class Qualification(
     val image_url: String,
     val title: String,
     val subtitle: String,
+    val cardBottomColor: String,
     val total_word_count: Int
 )

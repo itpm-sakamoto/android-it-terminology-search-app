@@ -23,6 +23,10 @@
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.setting.SettingActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.top.ITTerminologyTopActivity"
             android:screenOrientation="portrait" />
     </application>
