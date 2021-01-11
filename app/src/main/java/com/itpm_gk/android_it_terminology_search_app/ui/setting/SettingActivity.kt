@@ -8,8 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.itpm_gk.android_it_terminology_search_app.R
 import com.itpm_gk.android_it_terminology_search_app.databinding.ActivitySettingBinding
+import com.itpm_gk.android_it_terminology_search_app.util.enum.SharedPreferencesUtil
+import com.itpm_gk.android_it_terminology_search_app.util.enum.Theme
 
-class SettingActivity: AppCompatActivity(), SettingFragment.OnSettingActionListener {
+class SettingActivity: AppCompatActivity(), SettingFragment.OnSettingActionListener,
+    ThemeSettingFragment.OnThemeSettingActionListener {
 
     companion object {
         fun createIntent(context: Context) = Intent(context, SettingActivity::class.java)
@@ -38,7 +41,6 @@ class SettingActivity: AppCompatActivity(), SettingFragment.OnSettingActionListe
     private fun actionBarSettings() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
-            title = getString(R.string.settings)
             setDisplayHomeAsUpEnabled(true)
             setHomeButtonEnabled(true)
         }
@@ -54,5 +56,38 @@ class SettingActivity: AppCompatActivity(), SettingFragment.OnSettingActionListe
             else -> result = super.onOptionsItemSelected(item)
         }
         return result
+    }
+
+    /**
+     * テーマ設定画面への遷移処理
+     */
+    override fun moveToThemeSetting() {
+        val selectThemeIndex = SharedPreferencesUtil.getSelectTheme(this)
+        val fragment = ThemeSettingFragment.newInstance(selectThemeIndex,this)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.setting_fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    /**
+     * 文字サイズ変更ダイアログの表示
+     */
+    override fun showMojiSizeDialog() {
+        TODO("Not yet implemented")
+    }
+
+    /**
+     * タイトル変更
+     */
+    override fun titleChange(titleResId: Int) {
+        supportActionBar?.title = getString(titleResId)
+    }
+
+    /**
+     * テーマ選択
+     */
+    override fun selectTheme(theme: Theme) {
+        SharedPreferencesUtil.saveSelectTheme(this, theme)
     }
 }
