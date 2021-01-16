@@ -6,11 +6,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.itpm_gk.android_it_terminology_search_app.R
 import com.itpm_gk.android_it_terminology_search_app.databinding.FragmentSettingBinding
+import com.itpm_gk.android_it_terminology_search_app.util.enum.MojiSize
 
 class SettingFragment(private val listener: OnSettingActionListener): Fragment(R.layout.fragment_setting), View.OnClickListener {
 
     companion object {
-        fun newInstance(listener: OnSettingActionListener) = SettingFragment(listener)
+        private const val KEY_MOJI_SIZE_STR = "key_moji_size_str"
+        fun newInstance(listener: OnSettingActionListener, mojiSizeStr: String): SettingFragment {
+            val args = Bundle()
+            args.putString(KEY_MOJI_SIZE_STR, mojiSizeStr)
+            val fragment = SettingFragment(listener)
+            fragment.arguments = args
+            return fragment
+        }
     }
 
     interface OnSettingActionListener {
@@ -24,8 +32,10 @@ class SettingFragment(private val listener: OnSettingActionListener): Fragment(R
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val mojiSizeStr = arguments?.getString(KEY_MOJI_SIZE_STR) ?: getString(R.string.default_str)
         binding = DataBindingUtil.bind(view)
-        binding?.let {
+        binding?.also {
+            it.mojiSizeText.text = mojiSizeStr
             it.theme.setOnClickListener(this)
             it.mojiSize.setOnClickListener(this)
         }
@@ -42,5 +52,12 @@ class SettingFragment(private val listener: OnSettingActionListener): Fragment(R
             R.id.moji_size -> listener.showMojiSizeDialog()
             else -> TODO("Not yet implemented")
         }
+    }
+
+    /**
+     * 文字サイズのサブタイトルを変更するメソッド
+     */
+    fun updateMojiSizeDisplay(mojiSizeStr: String) {
+        binding?.mojiSizeText?.text = mojiSizeStr
     }
 }

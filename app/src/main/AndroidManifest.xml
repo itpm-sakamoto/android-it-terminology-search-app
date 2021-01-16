@@ -28,7 +28,21 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.top.ITTerminologyTopActivity"
+            android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.about_app.AboutAppActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.license.LicenseActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.privacy_policy.PrivacyPolicyActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        
     </application>
 
 </manifest>

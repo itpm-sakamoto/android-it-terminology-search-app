@@ -11,6 +11,7 @@ import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import com.itpm_gk.android_it_terminology_search_app.R
 import com.itpm_gk.android_it_terminology_search_app.databinding.ActivityTopBinding
+import com.itpm_gk.android_it_terminology_search_app.ui.about_app.AboutAppActivity
 import com.itpm_gk.android_it_terminology_search_app.ui.setting.SettingActivity
 import kotlinx.coroutines.delay
 
@@ -89,7 +90,10 @@ class TopActivity: AppCompatActivity(), View.OnClickListener {
                 binding.drawerLayout.closeDrawers()
             }
             // 「このアプリについて」が選択された場合
-            R.id.nav_about_app -> return
+            R.id.nav_about_app -> {
+                startActivity(AboutAppActivity.createIntent(this@TopActivity))
+                binding.drawerLayout.closeDrawers()
+            }
             else -> return
         }
     }

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.itpm_gk.android_it_terminology_search_app.R
 import com.itpm_gk.android_it_terminology_search_app.databinding.ActivitySettingBinding
+import com.itpm_gk.android_it_terminology_search_app.util.enum.MojiSize
 import com.itpm_gk.android_it_terminology_search_app.util.enum.SharedPreferencesUtil
 import com.itpm_gk.android_it_terminology_search_app.util.enum.Theme
 
@@ -29,7 +30,8 @@ class SettingActivity: AppCompatActivity(), SettingFragment.OnSettingActionListe
         actionBarSettings()
 
         // Fragmentの設定
-        val fragment = SettingFragment.newInstance(this)
+        val mojiSize = SharedPreferencesUtil.getSelectMojiSize(this)
+        val fragment = SettingFragment.newInstance(this, getString(mojiSize.getMojiNameResId()))
         supportFragmentManager.beginTransaction()
             .replace(R.id.setting_fragment_container, fragment)
             .commit()
@@ -74,7 +76,15 @@ class SettingActivity: AppCompatActivity(), SettingFragment.OnSettingActionListe
      * 文字サイズ変更ダイアログの表示
      */
     override fun showMojiSizeDialog() {
-        TODO("Not yet implemented")
+        MojiSizeDialogFragment(object : MojiSizeDialogFragment.OnItemClickListener {
+            override fun onItemClick(mojiSize: MojiSize) {
+                // 表示を更新する
+                val fragment = supportFragmentManager.findFragmentById(R.id.setting_fragment_container)
+                if (fragment is SettingFragment) {
+                    fragment.updateMojiSizeDisplay(getString(mojiSize.getMojiNameResId()))
+                }
+            }
+        }).show(supportFragmentManager, "MojiSizeDialogFragment")
     }
 
     /**
