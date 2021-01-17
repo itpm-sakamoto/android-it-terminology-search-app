@@ -1,4 +1,4 @@
-package com.itpm_gk.android_it_terminology_search_app.ui.top
+package com.itpm_gk.android_it_terminology_search_app.ui.word_list
 
 import android.app.Application
 import android.content.Context
@@ -11,13 +11,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ITTerminologyTopViewModel(
+class WordListViewModel(
     private val coroutineScope: CoroutineScope,
     application: Application
 ): AndroidViewModel(application), LifecycleObserver {
 
     companion object {
-        private val TAG = ITTerminologyTopViewModel::class.simpleName
+        private val TAG = WordListViewModel::class.simpleName
     }
 
     private val itTerminologyRepository: ITTerminologyRepository

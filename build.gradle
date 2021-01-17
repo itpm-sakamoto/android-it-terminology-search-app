@@ -29,4 +29,5 @@ ext {
     roomVersion = '2.2.5'
     coroutines = '1.3.4'
     converterMoshi = '2.7.0'
+    transformationlayout= '1.0.7'
 }

@@ -25,4 +25,8 @@
     <string name="license">ライセンス</string>
     <string name="privacy_policy">プライバシーポリシー</string>
 
+    <string name="word_list">用語一覧</string>
+
+    <string name="word_detail">用語詳細</string>
+
 </resources>

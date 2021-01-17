@@ -1,4 +1,4 @@
-package com.itpm_gk.android_it_terminology_search_app.ui.detail
+package com.itpm_gk.android_it_terminology_search_app.ui.word_detail
 
 import android.os.Bundle
 import android.util.Log
@@ -7,18 +7,18 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.itpm_gk.android_it_terminology_search_app.R
 import com.itpm_gk.android_it_terminology_search_app.data.database.entity.ITTerminology
-import com.itpm_gk.android_it_terminology_search_app.databinding.FragmentItTerminologyDetailBinding
+import com.itpm_gk.android_it_terminology_search_app.databinding.FragmentWordDetailBinding
 
-class ITTerminologyDetailFragment(): Fragment(R.layout.fragment_it_terminology_detail) {
+class WordDetailFragment(private val listener: OnWordDetailActionListener): Fragment(R.layout.fragment_word_detail) {
 
     companion object {
-        private val TAG = ITTerminologyDetailFragment::class.simpleName
+        private val TAG = WordDetailFragment::class.simpleName
         private const val KEY_IT_TERMINOLOGY_ID = "key_id"
         private const val KEY_IT_TERMINOLOGY_DISPLAY_NAME = "key_display_name"
         private const val KEY_IT_TERMINOLOGY_DESCRIPTION = "key_description"
 
-        fun newInstance(itTerminology: ITTerminology): ITTerminologyDetailFragment {
-            val fragment = ITTerminologyDetailFragment()
+        fun newInstance(itTerminology: ITTerminology, listener: OnWordDetailActionListener): WordDetailFragment {
+            val fragment = WordDetailFragment(listener)
             val args = Bundle()
             args.putInt(KEY_IT_TERMINOLOGY_ID, itTerminology.id)
             args.putString(KEY_IT_TERMINOLOGY_DISPLAY_NAME, itTerminology.display_name)
@@ -28,13 +28,18 @@ class ITTerminologyDetailFragment(): Fragment(R.layout.fragment_it_terminology_d
         }
     }
 
-    private var binding: FragmentItTerminologyDetailBinding? = null
+    interface OnWordDetailActionListener {
+        fun titleChange(titleResId: Int)
+        fun actionBarSetting(className: String)
+    }
+
+    private var binding: FragmentWordDetailBinding? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // Create DataBinding instance.
-        val dataBinding: FragmentItTerminologyDetailBinding? = DataBindingUtil.bind(view)
+        val dataBinding: FragmentWordDetailBinding? = DataBindingUtil.bind(view)
         binding = dataBinding ?: run {
             Log.w(TAG, "DataBinding was not found.")
             return
@@ -54,6 +59,12 @@ class ITTerminologyDetailFragment(): Fragment(R.layout.fragment_it_terminology_d
         }
         val itTerminology = ITTerminology(id, "", displayName, description)
         binding?.itTerminology = itTerminology
+    }
+
+    override fun onResume() {
+        super.onResume()
+        listener.titleChange(R.string.word_detail)
+        listener.actionBarSetting(WordDetailFragment::class.java.simpleName)
     }
 
     override fun onDestroy() {

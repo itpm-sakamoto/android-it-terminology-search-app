@@ -27,7 +27,7 @@
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.top.ITTerminologyTopActivity"
+            android:name=".ui.word_list.WordListActivity"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
         <activity

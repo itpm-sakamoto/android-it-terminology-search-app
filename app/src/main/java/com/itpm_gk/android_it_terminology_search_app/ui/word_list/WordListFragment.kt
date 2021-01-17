@@ -1,4 +1,4 @@
-package com.itpm_gk.android_it_terminology_search_app.ui.top
+package com.itpm_gk.android_it_terminology_search_app.ui.word_list
 
 import android.os.Bundle
 import android.view.View
@@ -8,25 +8,29 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.itpm_gk.android_it_terminology_search_app.R
 import com.itpm_gk.android_it_terminology_search_app.adapter.ITTerminologyListAdapter
 import com.itpm_gk.android_it_terminology_search_app.data.database.entity.ITTerminology
-import kotlinx.android.synthetic.main.fragment_it_terminology_top.*
+import kotlinx.android.synthetic.main.fragment_word_list.*
 
-class ITTerminologyTopFragment(private val listener: OnITTerminologyTopActionListener):
-    Fragment(R.layout.fragment_it_terminology_top),
+class WordListFragment(private val listener: OnITTerminologyTopActionListener):
+    Fragment(R.layout.fragment_word_list),
     ITTerminologyListAdapter.ITTerminologyListAdapterCallbackListener {
 
     companion object {
-        fun newInstance(listener: OnITTerminologyTopActionListener) = ITTerminologyTopFragment(listener)
+        fun newInstance(listener: OnITTerminologyTopActionListener) =
+            WordListFragment(
+                listener
+            )
     }
 
-    private lateinit var viewModel: ITTerminologyTopViewModel
+    private lateinit var viewModel: WordListViewModel
     private lateinit var adapter: ITTerminologyListAdapter
 
     interface OnITTerminologyTopActionListener {
         fun moveToDetail(itTerminology: ITTerminology)
+        fun titleChange(titleResId: Int)
+        fun actionBarSetting(className: String)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,14 +51,23 @@ class ITTerminologyTopFragment(private val listener: OnITTerminologyTopActionLis
         viewLifecycleOwner.lifecycle.addObserver(viewModel)
     }
 
+    override fun onResume() {
+        super.onResume()
+        listener.titleChange(R.string.word_list)
+        listener.actionBarSetting(WordListFragment::class.java.simpleName)
+    }
+
     /**
      * ViewModelの作成
      */
     private fun createViewModel() =
         ViewModelProvider(
             this,
-            ITTerminologyTopViewModelFactory(lifecycleScope, requireContext())
-        ).get(ITTerminologyTopViewModel::class.java)
+            WordListViewModelFactory(
+                lifecycleScope,
+                requireContext()
+            )
+        ).get(WordListViewModel::class.java)
 
     /**
      * Adapterの作成

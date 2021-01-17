@@ -3,9 +3,6 @@ package com.itpm_gk.android_it_terminology_search_app.ui.splash
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.itpm_gk.android_it_terminology_search_app.R
-import com.itpm_gk.android_it_terminology_search_app.data.database.entity.ITTerminology
-import com.itpm_gk.android_it_terminology_search_app.ui.top.ITTerminologyTopFragment
-import com.itpm_gk.android_it_terminology_search_app.ui.splash.SplashFragment
 import com.itpm_gk.android_it_terminology_search_app.ui.top.TopActivity
 
 class SplashActivity: AppCompatActivity(), SplashFragment.SplashActionListener {

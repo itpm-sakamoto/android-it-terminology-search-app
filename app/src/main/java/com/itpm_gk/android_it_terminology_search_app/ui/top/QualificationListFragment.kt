@@ -10,10 +10,15 @@ import com.itpm_gk.android_it_terminology_search_app.adapter.QualificationListAd
 import com.itpm_gk.android_it_terminology_search_app.data.database.entity.Qualification
 import com.itpm_gk.android_it_terminology_search_app.databinding.FragmentQualificationListBinding
 
-class QualificationListFragment: Fragment(R.layout.fragment_qualification_list) {
+class QualificationListFragment(private val listener: OnQualificationListActionListener): Fragment(R.layout.fragment_qualification_list),
+    QualificationListAdapter.QualificationListAdapterCallbackListener {
 
     companion object {
-        fun newInstance() = QualificationListFragment()
+        fun newInstance(listener: OnQualificationListActionListener) = QualificationListFragment(listener)
+    }
+
+    interface OnQualificationListActionListener {
+        fun moveToWordList(qualification: Qualification)
     }
 
     private lateinit var layoutManager: LinearLayoutManager
@@ -36,6 +41,7 @@ class QualificationListFragment: Fragment(R.layout.fragment_qualification_list) 
             layoutInflater,
             qualificationListSnapshot
         )
+        adapter.setOnClickListener(this)
 
         // LayoutManagerの作成
         layoutManager = LinearLayoutManager(
@@ -67,5 +73,12 @@ class QualificationListFragment: Fragment(R.layout.fragment_qualification_list) 
             it.recyclerView.visibility = View.VISIBLE
             it.emptyText.visibility = View.GONE
         }
+    }
+
+    /**
+     * アダプターアイテム選択検知
+     */
+    override fun onItemSelected(qualification: Qualification) {
+        listener.moveToWordList(qualification)
     }
 }

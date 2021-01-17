@@ -24,6 +24,11 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     dataBinding {
         enabled = true
     }
@@ -45,11 +50,13 @@ dependencies {
     implementation "com.squareup.moshi:moshi-kotlin:1.9.2"
     implementation "com.squareup.retrofit2:converter-moshi:$rootProject.converterMoshi"
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
+    implementation "com.github.skydoves:transformationlayout:$rootProject.transformationlayout"
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
 
 }

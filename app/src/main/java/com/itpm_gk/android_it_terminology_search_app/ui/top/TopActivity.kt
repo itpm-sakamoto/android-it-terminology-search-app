@@ -10,12 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import com.itpm_gk.android_it_terminology_search_app.R
+import com.itpm_gk.android_it_terminology_search_app.data.database.entity.Qualification
 import com.itpm_gk.android_it_terminology_search_app.databinding.ActivityTopBinding
 import com.itpm_gk.android_it_terminology_search_app.ui.about_app.AboutAppActivity
 import com.itpm_gk.android_it_terminology_search_app.ui.setting.SettingActivity
+import com.itpm_gk.android_it_terminology_search_app.ui.word_list.WordListActivity
 import kotlinx.coroutines.delay
 
-class TopActivity: AppCompatActivity(), View.OnClickListener {
+class TopActivity: AppCompatActivity(), View.OnClickListener, QualificationListFragment.OnQualificationListActionListener {
 
     companion object {
         // クラス名（タグ用）
@@ -40,7 +42,7 @@ class TopActivity: AppCompatActivity(), View.OnClickListener {
         setSupportActionBar(binding.appBarTop.toolbar)
         supportActionBar?.title = getString(R.string.qualification_list)
 
-        fragment = QualificationListFragment.newInstance()
+        fragment = QualificationListFragment.newInstance(this)
 
         // ドロワーメニューの設定
         initDrawerMenu()
@@ -96,5 +98,12 @@ class TopActivity: AppCompatActivity(), View.OnClickListener {
             }
             else -> return
         }
+    }
+
+    /**
+     * 用語一覧画面への遷移処理
+     */
+    override fun moveToWordList(qualification: Qualification) {
+        startActivity(WordListActivity.createIntent(this, qualification))
     }
 }
