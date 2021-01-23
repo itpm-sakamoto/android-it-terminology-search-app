@@ -31,6 +31,10 @@
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.word_detail.WordDetailActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.about_app.AboutAppActivity"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />

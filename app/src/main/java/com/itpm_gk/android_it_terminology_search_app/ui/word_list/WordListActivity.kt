@@ -8,11 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.itpm_gk.android_it_terminology_search_app.R
 import com.itpm_gk.android_it_terminology_search_app.data.database.entity.ITTerminology
 import com.itpm_gk.android_it_terminology_search_app.data.database.entity.Qualification
-import com.itpm_gk.android_it_terminology_search_app.ui.word_detail.WordDetailFragment
+import com.itpm_gk.android_it_terminology_search_app.ui.word_detail.WordDetailActivity
 import kotlinx.android.synthetic.main.app_bar_top.*
 
 class WordListActivity: AppCompatActivity(),
-    WordListFragment.OnITTerminologyTopActionListener, WordDetailFragment.OnWordDetailActionListener {
+    WordListFragment.OnITTerminologyTopActionListener {
 
     companion object {
         private const val EXTRA_QUALIFICATION = "extra_qualification"
@@ -44,11 +44,8 @@ class WordListActivity: AppCompatActivity(),
      */
     override fun moveToDetail(itTerminology: ITTerminology) {
         // 詳細画面へ遷移
-        val fragment = WordDetailFragment.newInstance(itTerminology, this)
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.it_terminology_top_fragment_container, fragment)
-            .addToBackStack(null)
-            .commit()
+        val intent = WordDetailActivity.createIntent(this, itTerminology)
+        startActivity(intent)
     }
 
     /**
@@ -63,16 +60,10 @@ class WordListActivity: AppCompatActivity(),
      */
     override fun actionBarSetting(className: String) {
         when (className) {
-            WordDetailFragment::class.java.simpleName -> {
+            WordListFragment::class.java.simpleName -> {
                 supportActionBar?.also {
                     it.setDisplayHomeAsUpEnabled(true)
                     it.setHomeButtonEnabled(true)
-                }
-            }
-            WordListFragment::class.java.simpleName -> {
-                supportActionBar?.also {
-                    it.setDisplayHomeAsUpEnabled(false)
-                    it.setHomeButtonEnabled(false)
                 }
             }
             else -> return
